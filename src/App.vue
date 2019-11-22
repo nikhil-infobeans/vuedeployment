@@ -1,28 +1,38 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div>
+  <template v-if="!$route.meta.allowAnonymous">
+  <v-app>
+    <go-forum-Header></go-forum-Header>
+    <go-forum-sidebar></go-forum-sidebar>
+    <v-content class="white">
+      <v-container>
+      <router-view></router-view>
+      </v-container>
+    </v-content>
+    <go-forum-footer></go-forum-footer>
+  </v-app>
+  </template>
+   <template v-else>
+      <transition>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </transition>
+    </template>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Layout/Header.vue';
+import Sidebar from './components/Layout/Sidebar.vue';
+import Footer from './components/Layout/Footer.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    'go-forum-Header': Header,
+    'go-forum-sidebar': Sidebar,
+    'go-forum-footer': Footer
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
